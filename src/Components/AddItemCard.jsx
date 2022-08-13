@@ -3,7 +3,6 @@ import { useState } from "react";
 
 const AddItemCard = ({ listItems, setListItems, setIsHidden }) => {
   const [name, setName] = useState("");
-  const [itemValue, setItemValue] = useState("");
   const [orderDate, setOrderDate] = useState("");
   const [orderItems, setOrderItems] = useState([
     { itemName: "", quantity: "", price: "" },
@@ -32,21 +31,19 @@ const AddItemCard = ({ listItems, setListItems, setIsHidden }) => {
     setOrderItems(values);
     setIncrement(increment - 1);
   }
-function formValidation () {
 
-}
   function checkValidation(idx) {
     let status = false;
-     if(orderItems.length == idx+1 ) {
-         if ( orderItems[idx].itemName == "") 
+     if(orderItems.length === idx+1 ) {
+         if ( orderItems[idx].itemName === "") 
          {
             setErrorMsg("Item Name")
             return status;
-     } else if (orderItems[idx].price == "")
+     } else if (orderItems[idx].price === "")
        {
         setErrorMsg("price")
         return status;
-       }else if (orderItems[idx].quantity == "") {
+       }else if (orderItems[idx].quantity === "") {
         setErrorMsg("quantity")
         return status;
        }
@@ -60,11 +57,11 @@ function formValidation () {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  if(name == ""){
+  if(name === ""){
     setErrorMsg("Customer Name")
-  }else if(orderDate==""){
+  }else if(orderDate===""){
     setErrorMsg("order date")
-  }else if (checkValidation(orderItems.length -1 ) == false){
+  }else if (checkValidation(orderItems.length -1 ) === false){
     setErrorMsg("Valid Data")
   }
   else {
@@ -76,10 +73,11 @@ function formValidation () {
       orderDate: orderDate,
       items: orderItems,
       createdAt: Date().toLocaleString(),
+      sort: id
     });
     setListItems(arr);
     setName("");
-    setItemValue("");
+   
     setOrderItems([]);
     setOrderDate("")
   }
@@ -156,7 +154,7 @@ function formValidation () {
                 />
               </div>
               <div className="col-sm-3 d-flex justify-content=between">
-                {idx != 0 ? (
+                {idx !== 0 ? (
                   <input
                     type="button"
                     className="btn btn-outline-danger mt-4 mr-2"
@@ -167,7 +165,7 @@ function formValidation () {
                     }}
                   />
                 ) : null}
-          { increment == idx+1  ?
+          { increment === idx+1  ?
                 <input
                   type="button"
                   className="btn btn-outline-danger mt-4 marleft"

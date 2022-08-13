@@ -1,18 +1,23 @@
 body {
-  background: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+  background: rgb(211, 211, 211) !important;
   font-family: Noto Sans, Helvetica, sans-serif;
   color: #666;
   letter-spacing: 1px;
-  padding: 10px;
+  padding-top: 10px;
   min-height: 100vh;
 }
 
   .main-content {
-    width: 80%;
+    width: 90%;
     margin: auto auto 100px auto;
   }
-  .dark-button {
-    background-color: black;
+  .btn{
+  &.dark-button {
+    color: #ffffff;
+    background-color: #131A4E;
+  }}
+  .dark-mode{
+    color: #131A4E
   }
   .close {
     color: #aaa;
@@ -50,5 +55,21 @@ body {
   }
  
       .marleft {margin-left: 2px};
+
+      @import "~bootstrap/scss/bootstrap-utilities";
+
+//Generate utilites for Cursor
+$utilities: map-merge(
+  $utilities,
+  (
+    "cursor": (
+      property: cursor,
+      values: auto default pointer wait text move help not-allowed
+    ),
+  )
+);
+
+@import '~bootstrap/scss/bootstrap';
+
 
   

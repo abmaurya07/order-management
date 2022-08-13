@@ -2,115 +2,103 @@ import { useEffect, useState } from "react";
 import GetSortOrder from "../Utils/GetSortOrder";
 import AddItemCard from "./AddItemCard";
 import "bootstrap/dist/css/bootstrap.min.css";
+import ReactHtmlToExcel from "react-html-to-excel";
+import OrderList from "./OrderList";
+import NoData from "../assets/images/NoData.jpg";
 const OrderManagement = () => {
   const [listItems, setListItems] = useState([]);
-const [isHidden, setIsHidden] = useState (true);
+  const [isHidden, setIsHidden] = useState(true);
   const [listToDisplay, setListToDisplay] = useState([]);
-console.log(listToDisplay)
+
+  //UseEffect - ListtoDisplay is the array which is shown in the table.
   useEffect(() => {
-    let sortedList = listItems.sort(GetSortOrder("id")).reverse();
-    console.log("sotedList", sortedList);
+    let sortedList = listItems.sort(GetSortOrder("sort"));
     setListToDisplay(sortedList);
   }, [listItems]);
 
   //Search Fuctionality
   const searchFunctionality = (value) => {
-    console.log("filteredList", value);
+    // console.log("filteredList", value);
     if (!value) {
       setListToDisplay(listItems);
     } else {
       let filteredList = listItems.filter(
         (items) =>
           items.name.toLowerCase().includes(value.toLowerCase()) ||
-          items.value.toLowerCase().includes(value.toLowerCase())
+          items.orderDate.toLowerCase().includes(value.toLowerCase()) ||
+          items.items.some((e) =>
+            e.itemName.toLowerCase().includes(value.toLowerCase())
+          )
       );
       setListToDisplay(filteredList);
     }
   };
 
-  const sortingFunction = (type) => {
-    console.log(type);
-    let sortedArr = listItems.sort(GetSortOrder(`${type}`));
-    console.log("sodf", sortedArr);
-    // setListToDisplay(sortedArr);
-    setListItems(sortedArr);
-  };
-
-  console.log("listToDIspaly", listToDisplay);
-  //Adding Item to the list function
-
-  //Item delete function
-  const handleDelete = (e) => {
-    console.log("e", e);
-    let newArr = listItems.filter((event) => event.id !== e);
-    console.log("atte", newArr);
-    setListItems(newArr);
-  };
-  console.log("name", listItems);
   return (
     <>
-    <div className="container">
-      {/* Search box */}
-      <div className="d-flex justify-content-center">
-        <div>
-          <input
-            type="text"
-            onChange={(e) => searchFunctionality(e.target.value)}
-            className="form-control-sm float-right"
-            placeholder="Search here"
+      <div className="container">
+        {/* Header of the Card contains Search box, Export button & Add order button */}
+
+        <h1 className="dark-mode"> Orders</h1>
+        <div className=" d-flex justify-content-between mb-2">
+          <div className="col-sm-6">
+            <input
+              type="text"
+              onChange={(e) => searchFunctionality(e.target.value)}
+              className="form-control"
+              placeholder="Search here ..."
+            />
+          </div>
+
+          <div>
+            <ReactHtmlToExcel
+              id="excelComp"
+              className=" btn btn-outline-success"
+              table="orderTable"
+              filename="tablexls"
+              sheet="tablexls"
+              buttonText="Export to Excel"
+            />
+
+            <button
+              type="button"
+              class="btn dark-button marleft"
+              onClick={() => {
+                setIsHidden(false);
+              }}
+            >
+              + New Order
+            </button>
+          </div>
+        </div>
+
+        {/* Table starts from here it contains nested table*/}
+        {listToDisplay.length !== 0 ? (
+          <OrderList
+            setListItems={setListItems}
+            listItems={listItems}
+            listToDisplay={listToDisplay}
           />
-        </div>
-        <div>
-          <button type="button" class="btn btn-outline-primary">
-            Export to Excel
-          </button>
-          <button type="button" class="btn dark-button" onClick={() => {setIsHidden(false)}}>
-            + New Order
-          </button>
-
-        </div>
+        ) : (
+          <img
+            src={NoData}
+            alt="No Data"
+            height="600"
+            width="80%"
+            // className="img-fluid"
+          />
+        )}
       </div>
 
-      {/* Table */}
-      <div className="row">
-        <table className="table  table-bordered text-center border border-dark ">
-          <thead>
-            <tr className="bg-dark text-white">
-              <th onClick={() => sortingFunction("name")}>Order ID</th>
-              <th onClick={() => sortingFunction("value")}>Date</th>
-              <th onClick={() => sortingFunction("id")}>Customer Name </th>
-              <th onClick={() => sortingFunction("id")}>Items </th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {listToDisplay.map((item, idx) => {
-              return (
-                <tr key={idx}>
-                  <td>#{item.id}</td>
-                  <td>{item.orderDate}</td>
-                  <td>{item.name}</td>
-                  <td>{item.items.length}</td>
-
-                  <td>
-                    <button
-                      className="btn btn-outline-danger"
-                      onClick={() => handleDelete(item.id)}
-                    >
-                      {" "}
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-
-    </div>
-     { isHidden == false ?  <AddItemCard listItems={listItems} setListItems={setListItems} setIsHidden={setIsHidden}/> : null }
-      </>
+      {/* Add Order Component */}
+      {isHidden === false ? (
+        <AddItemCard
+          listItems={listItems}
+          setListItems={setListItems}
+          setIsHidden={setIsHidden}
+        />
+      ) : null}
+    </>
   );
 };
 export default OrderManagement;
