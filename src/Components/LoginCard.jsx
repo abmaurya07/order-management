@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const LoginCard = () => {
+const LoginCard = ({setIsLoggedIn}) => {
   const navigate = useNavigate();
   const [email, setEmail] =useState ()
   const [password, setPassword] =useState ()
@@ -20,8 +20,7 @@ const LoginCard = () => {
     let status = false;
     let regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     
-    let test = userData.some((e) => e.email != email)
-    console.log("userfld", test)
+   
     if (email === "" || regex.test(email) === false)
        {
         setErrorMsg("Please Enter Valid Email!")
@@ -51,6 +50,7 @@ const LoginCard = () => {
       console.log("userDetail", UserDetails)
       localStorage.setItem("isLoggedIn", true)
       localStorage.setItem("userData", JSON.stringify(UserDetails))
+      setIsLoggedIn(true)
       navigate("/home")
     }
 

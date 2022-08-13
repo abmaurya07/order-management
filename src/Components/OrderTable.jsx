@@ -3,7 +3,7 @@ import GetSortOrder from "../Utils/GetSortOrder";
 
 
 
-const OrderList = ({setListItems, listItems, listToDisplay}) => {
+const OrderTable = ({setListItems, listItems, listToDisplay}) => {
     const [hidden, setHidden] = useState({});
     const [clicked, setClicked] = useState({});
 
@@ -127,4 +127,4 @@ const OrderList = ({setListItems, listItems, listToDisplay}) => {
     )
 }
 
-export default OrderList;
+export default OrderTable;

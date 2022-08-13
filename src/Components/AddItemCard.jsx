@@ -80,6 +80,7 @@ const AddItemCard = ({ listItems, setListItems, setIsHidden }) => {
    
     setOrderItems([]);
     setOrderDate("")
+    setIsHidden(true)
   }
   };
 
