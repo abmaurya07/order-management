@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "../Components/Header";
 import Dashboard from "../Components/Dashboard";
 import LoginCard from "../Components/LoginCard";
+import RegisterCard from "../Components/Register";
 
 const AppRouter = () => {
   return (
@@ -12,6 +13,9 @@ const AppRouter = () => {
           <Routes>
             <Route element={<Dashboard />} path="/home" />
             <Route element={<LoginCard />} path="/login" />
+            <Route element={<RegisterCard />} path="/register" />
+
+            
           </Routes>
         </div>
       </div>
