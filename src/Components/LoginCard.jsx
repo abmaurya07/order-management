@@ -8,7 +8,7 @@ const LoginCard = ({setIsLoggedIn}) => {
   const [password, setPassword] =useState ()
   const [userData, setUserData] = useState()
   const [errorMsg, setErrorMsg] = useState()
-  console.log("userData", userData)
+  // console.log("userData", userData)
   useEffect( () => {
     if(localStorage.getItem('Users')){
       setUserData(JSON.parse( localStorage.getItem('Users')))
@@ -16,7 +16,7 @@ const LoginCard = ({setIsLoggedIn}) => {
   },[])
 
   function checkValidation() {
-    console.log("email", email, 'password', password)
+    // console.log("email", email, 'password', password)
     let status = false;
     let regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     
@@ -47,7 +47,6 @@ const LoginCard = ({setIsLoggedIn}) => {
   
     const handleSubmit = () => {
       let UserDetails = userData.filter((e) => e.email === email)
-      console.log("userDetail", UserDetails)
       localStorage.setItem("isLoggedIn", true)
       localStorage.setItem("userData", JSON.stringify(UserDetails))
       setIsLoggedIn(true)
@@ -63,7 +62,7 @@ const LoginCard = ({setIsLoggedIn}) => {
               className="card bg-dark text-white"
               style={{ borderRadius: "1rem" }}
             >
-              <div className="card-body p-5 text-center">
+              <div className="card-body p-5 ">
                 <div className="mb-md-5 mt-md-4 pb-3">
                   <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
                   <p className="text-white-50 mb-3">

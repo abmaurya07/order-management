@@ -9,9 +9,9 @@ const AddItemCard = ({ listItems, setListItems, setIsHidden }) => {
   ]);
   const [increment, setIncrement] = useState(1);
   const [errorMsg, setErrorMsg] = useState()
-  console.log("errorMsg",errorMsg)
+  // console.log("errorMsg",errorMsg)
 
-  console.log(orderItems);
+  // console.log(orderItems);
 
   const handleChange = (value, itemKey, idx) => {
     const values = [...orderItems];

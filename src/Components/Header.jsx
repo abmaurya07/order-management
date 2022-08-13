@@ -7,13 +7,12 @@ import { useNavigate } from "react-router-dom";
 const Header = ({setIsLoggedIn}) => {
   const [userData, setUserData] = useState()
   const [isHidden, setIsHidden] = useState(true)
-console.log("userData", userData)
+// console.log("userData", userData)
   useEffect(() => {
     setUserData(JSON.parse(localStorage.getItem('userData')))
   }, [])
 
 
-console.log("userData", userData)
 
  const navigate = useNavigate()
   const handleLogout= () => {
