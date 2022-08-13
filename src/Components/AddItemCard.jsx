@@ -1,5 +1,5 @@
-import React from "react";
-import { useState } from "react";
+//--Component to add order details--//
+import React, {useState} from "react";
 
 const AddItemCard = ({ listItems, setListItems, setIsHidden }) => {
   const [name, setName] = useState("");
@@ -8,11 +8,13 @@ const AddItemCard = ({ listItems, setListItems, setIsHidden }) => {
     { itemName: "", quantity: "", price: "" },
   ]);
   const [increment, setIncrement] = useState(1);
-  const [errorMsg, setErrorMsg] = useState()
+  const [errorMsg, setErrorMsg] = useState();
   // console.log("errorMsg",errorMsg)
 
   // console.log(orderItems);
 
+
+  //------This function gets called each time user presses key in add item input box ------//
   const handleChange = (value, itemKey, idx) => {
     const values = [...orderItems];
     if (orderItems.length < idx + 1) {
@@ -22,8 +24,10 @@ const AddItemCard = ({ listItems, setListItems, setIsHidden }) => {
     values[idx][`${itemKey}`] = value;
 
     setOrderItems(values);
-    setErrorMsg()
+    setErrorMsg();
   };
+
+  //------Function to remove item from the order-----//
 
   function removeFunc(idx) {
     let values = [...orderItems];
@@ -32,56 +36,56 @@ const AddItemCard = ({ listItems, setListItems, setIsHidden }) => {
     setIncrement(increment - 1);
   }
 
+  //-------Form validation for beefore submitting the order--////
   function checkValidation(idx) {
     let status = false;
-     if(orderItems.length === idx+1 ) {
-         if ( orderItems[idx].itemName === "") 
-         {
-            setErrorMsg("Item Name")
-            return status;
-     } else if (orderItems[idx].price === "")
-       {
-        setErrorMsg("price")
+    if (orderItems.length === idx + 1) {
+      if (orderItems[idx].itemName === "") {
+        setErrorMsg("Item Name");
         return status;
-       }else if (orderItems[idx].quantity === "") {
-        setErrorMsg("quantity")
+      } else if (orderItems[idx].price === "") {
+        setErrorMsg("price");
         return status;
-       }
-       else {
-         setErrorMsg()
-        status = true
-        return status}
+      } else if (orderItems[idx].quantity === "") {
+        setErrorMsg("quantity");
+        return status;
+      } else {
+        setErrorMsg();
+        status = true;
+        return status;
+      }
     }
-    return status;   
+    return status;
   }
 
+
+  //-----If item level validation passes the this function gets invoked and another validation check runs before submitting the Order------//
   const handleSubmit = (e) => {
     e.preventDefault();
-  if(name === ""){
-    setErrorMsg("Customer Name")
-  }else if(orderDate===""){
-    setErrorMsg("order date")
-  }else if (checkValidation(orderItems.length -1 ) === false){
-    setErrorMsg("Valid Data")
-  }
-  else {
-    let arr = [...listItems];
-    let id = listItems.length + 1001;
-    arr.push({
-      id: id,
-      name: name,
-      orderDate: orderDate,
-      items: orderItems,
-      createdAt: Date().toLocaleString(),
-      sort: id
-    });
-    setListItems(arr);
-    setName("");
-   
-    setOrderItems([]);
-    setOrderDate("")
-    setIsHidden(true)
-  }
+    if (name === "") {
+      setErrorMsg("Customer Name");
+    } else if (orderDate === "") {
+      setErrorMsg("order date");
+    } else if (checkValidation(orderItems.length - 1) === false) {
+      setErrorMsg("Valid Data");
+    } else {
+      let arr = [...listItems];
+      let id = listItems.length + 1001;
+      arr.push({
+        id: id,
+        name: name,
+        orderDate: orderDate,
+        items: orderItems,
+        createdAt: Date().toLocaleString(),
+        sort: id,
+      });
+      setListItems(arr);
+      setName("");
+
+      setOrderItems([]);
+      setOrderDate("");
+      setIsHidden(true);
+    }
   };
 
   return (
@@ -109,7 +113,8 @@ const AddItemCard = ({ listItems, setListItems, setIsHidden }) => {
               />
             </div>
           </div>
-          
+      {/* --------------   Add Item inputs -------------- */}
+
           {[...Array(increment)].map((items, idx) => (
             <div className="row mt-3">
               <div className="col-sm-4">
@@ -154,6 +159,9 @@ const AddItemCard = ({ listItems, setListItems, setIsHidden }) => {
                   }}
                 />
               </div>
+
+       {/* -------------  Button to remove the item from order* --------------------*/}
+
               <div className="col-sm-3 d-flex justify-content=between">
                 {idx !== 0 ? (
                   <input
@@ -162,38 +170,46 @@ const AddItemCard = ({ listItems, setListItems, setIsHidden }) => {
                     value="-"
                     onClick={() => {
                       removeFunc(idx);
-                      setErrorMsg()
+                      setErrorMsg();
                     }}
                   />
                 ) : null}
-          { increment === idx+1  ?
-                <input
-                  type="button"
-                  className="btn btn-outline-danger mt-4 marleft"
-                  value="Add More Item"
-                  onClick={() => {
-                    checkValidation(idx) === true ?
-                    setIncrement(increment + 1) : console.log("Please Enter the valid data")
-                  }}
-                  
-                /> 
-                : null }
 
-                
+              {/* Button to add more item from order*/}
+
+                {increment === idx + 1 ? (
+                  <input
+                    type="button"
+                    className="btn btn-outline-danger mt-4 marleft"
+                    value="Add More Item"
+                    onClick={() => {
+                      checkValidation(idx) === true
+                        ? setIncrement(increment + 1)
+                        : console.log("Please Enter the valid data");
+                    }}
+                  />
+                ) : null}
               </div>
-              
             </div>
           ))}
+             {/* -------------- -Validation error message ----------- -- */}
+             
+          <div className=" mt-3">
+            {errorMsg !== undefined ? (
+              <p className="text-danger">
+                Please enter {errorMsg} for the Order.
+              </p>
+            ) : null}
+          </div>
 
-<div className=" mt-3">
-
-{errorMsg !== undefined ? <p className="text-danger">Please enter {errorMsg} for the Order.
-                </p> : null}
-                </div>
-          
-<div className="d-flex justify-content-between mt-3">
-          
-            <button type="button" className="btn btn-outline-danger " onClick = {() => {setIsHidden(true)}}>
+          <div className="d-flex justify-content-between mt-3">
+            <button
+              type="button"
+              className="btn btn-outline-danger "
+              onClick={() => {
+                setIsHidden(true);
+              }}
+            >
               Cancel
             </button>
             <button type="submit" className="btn btn-outline-primary ">

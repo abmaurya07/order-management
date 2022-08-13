@@ -16,7 +16,8 @@ const OrderManagement = () => {
     setListToDisplay(sortedList);
   }, [listItems]);
 
-  //Search Fuctionality
+  //----------------Search Fuctionality works on order Date, Customer Name & item Name ------------------------//
+  
   const searchFunctionality = (value) => {
     // console.log("filteredList", value);
     if (!value) {
@@ -90,7 +91,7 @@ const OrderManagement = () => {
         )}
       </div>
 
-      {/* Add Order Component */}
+      {/* Add Order Component it is hidden by default */}
       {isHidden === false ? (
         <AddItemCard
           listItems={listItems}
