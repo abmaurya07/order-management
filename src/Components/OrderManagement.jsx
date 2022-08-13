@@ -3,7 +3,7 @@ import GetSortOrder from "../Utils/GetSortOrder";
 import AddItemCard from "./AddItemCard";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ReactHtmlToExcel from "react-html-to-excel";
-import OrderList from "./OrderList";
+import OrderTable from "./OrderTable";
 import NoData from "../assets/images/NoData.jpg";
 const OrderManagement = () => {
   const [listItems, setListItems] = useState([]);
@@ -16,7 +16,8 @@ const OrderManagement = () => {
     setListToDisplay(sortedList);
   }, [listItems]);
 
-  //Search Fuctionality
+  //----------------Search Fuctionality works on order Date, Customer Name & item Name ------------------------//
+  
   const searchFunctionality = (value) => {
     // console.log("filteredList", value);
     if (!value) {
@@ -74,7 +75,7 @@ const OrderManagement = () => {
 
         {/* Table starts from here it contains nested table*/}
         {listToDisplay.length !== 0 ? (
-          <OrderList
+          <OrderTable
             setListItems={setListItems}
             listItems={listItems}
             listToDisplay={listToDisplay}
@@ -90,7 +91,7 @@ const OrderManagement = () => {
         )}
       </div>
 
-      {/* Add Order Component */}
+      {/* Add Order Component it is hidden by default */}
       {isHidden === false ? (
         <AddItemCard
           listItems={listItems}

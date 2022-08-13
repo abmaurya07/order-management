@@ -1,72 +1,73 @@
-import React, { useState } from "react";
-import {useNavigate} from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegisterCard = () => {
-    const [fullName, setFullName] = useState("")
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [confirmPass, setConfirmPass] = useState("")
-    const [errorMsg, setErrorMsg] = useState("")
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [userData, setUserData] = useState("");
 
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("Users")) {
+      setUserData(JSON.parse(localStorage.getItem("Users")));
+    }
+  }, []);
 
-    const navigate = useNavigate()
-
-    function checkValidation() {
-        let status = false;
-        let regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-         if(fullName === "") {
-          
-                setErrorMsg("Please Enter Full Name!")
-                return status;
-         } else if (email === "" || regex.test(email) === false)
-           {
-            setErrorMsg("Please Enter Valid Email!")
-            return status;
-           }else if (password === "") {
-            setErrorMsg("Please Enter Password")
-            return status;
-           }else if (confirmPass === ""){
-            setErrorMsg("Please Enter the confirm password!")
-            return status;
-           }else if(password !== confirmPass){
-            setErrorMsg("Passowrd & Confirm password does not match!")
-            return status;
-           }
-           else if (password.length < 8) {
-            setErrorMsg("Password Length is too short! Minimum character - 8")
-            return status;
-           }
-           else {
-             setErrorMsg()
-            status = true
-            return status}
-        }
-      
-
-
-const handleSubmit =() => {
-console.log(JSON.parse(localStorage.getItem('Users')))
-
- let users
-    if(localStorage.getItem('Users') == undefined) {
-        users = []
+  function checkValidation() {
+    let status = false;
+    let regex =
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if (fullName === "") {
+      setErrorMsg("Please Enter Full Name!");
+      return status;
+    } else if (email === "" || regex.test(email) === false) {
+      setErrorMsg("Please Enter Valid Email!");
+      return status;
+    } else if (userData.some((e) => e.email == email) == true) {
+      setErrorMsg("Email already exists");
+      return status;
+    } else if (password === "") {
+      setErrorMsg("Please Enter Password");
+      return status;
+    } else if (confirmPass === "") {
+      setErrorMsg("Please Enter the confirm password!");
+      return status;
+    } else if (password !== confirmPass) {
+      setErrorMsg("Passowrd & Confirm password does not match!");
+      return status;
+    } else if (password.length < 8) {
+      setErrorMsg("Password Length is too short! Minimum character - 8");
+      return status;
     } else {
- users = JSON.parse( localStorage.getItem('Users'))
- console.log("opip", users)
+      setErrorMsg();
+      status = true;
+      return status;
+    }
+  }
+
+  const handleSubmit = () => {
+    let users;
+    if (localStorage.getItem("Users") == undefined) {
+      users = [];
+    } else {
+      users = JSON.parse(localStorage.getItem("Users"));
     }
     let payload = {
-        fullName: fullName,
-        email: email,
-        password: password,
-    }
+      fullName: fullName,
+      email: email,
+      password: password,
+    };
 
-    users.push(payload)
+    users.push(payload);
 
-   let tet = payload
+    let tet = payload;
 
-localStorage.setItem('Users', JSON.stringify(users));
-
-}
+    localStorage.setItem("Users", JSON.stringify(users));
+    navigate("/login");
+  };
 
   return (
     <section className="vh-100 gradient-custom">
@@ -78,8 +79,11 @@ localStorage.setItem('Users', JSON.stringify(users));
               style={{ borderRadius: "1rem" }}
             >
               <div className="card-body p-5 ">
-                <div className="mb-md-5 mt-md-4 pb-3">
-                  <h2 className="fw-bold pb-2 text-center">SIGN UP</h2>
+                <div className="mb-md-3 mt-md-4 pb-3">
+                  <h2 className="fw-bold pb-2 ">SIGN UP</h2>
+                  <p className="text-white-50 mb-3">
+                    Please enter your details!
+                  </p>
                   <div className="form-outline form-white mb-2">
                     <label className="form-label" for="fullName">
                       Full Name
@@ -89,7 +93,9 @@ localStorage.setItem('Users', JSON.stringify(users));
                       type="text"
                       id="fullName"
                       className="form-control form-control-lg"
-                      onChange={(e) => {setFullName(e.target.value)}}
+                      onChange={(e) => {
+                        setFullName(e.target.value);
+                      }}
                     />
                   </div>{" "}
                   <div className="form-outline form-white mb-2">
@@ -101,15 +107,13 @@ localStorage.setItem('Users', JSON.stringify(users));
                       type="email"
                       id="email"
                       className="form-control form-control-lg"
-                      onChange={(e) => {setEmail(e.target.value)}}
-
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
                     />
                   </div>{" "}
                   <div className="form-outline form-white mb-2">
-                    <label
-                      className="form-label"
-                      for="password"
-                    >
+                    <label className="form-label" for="password">
                       Password
                     </label>
 
@@ -117,15 +121,13 @@ localStorage.setItem('Users', JSON.stringify(users));
                       type="password"
                       id="password"
                       className="form-control form-control-lg"
-                      onChange={(e) => {setPassword(e.target.value)}}
-
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
                     />
                   </div>
                   <div className="form-outline form-white mb-2">
-                    <label
-                      className="form-label text-right"
-                      for="confirmPass"
-                    >
+                    <label className="form-label text-right" for="confirmPass">
                       Confirm Password
                     </label>
 
@@ -133,21 +135,23 @@ localStorage.setItem('Users', JSON.stringify(users));
                       type="password"
                       id="confirmPass"
                       className="form-control form-control-lg"
-                      onChange={(e) => {setConfirmPass(e.target.value)}}
-
+                      onChange={(e) => {
+                        setConfirmPass(e.target.value);
+                      }}
                     />
                   </div>
                   <p className="text-danger">{errorMsg}</p>
-               <div className="text-center">
                   <button
-                    className="btn btn-outline-light btn-lg px-5 mt-3"
+                    className="btn btn-outline-light btn-lg mt-3"
                     type="submit"
-                    onClick={() => {checkValidation() === true ? handleSubmit() : console.log("Invalid Data")}}
+                    onClick={() => {
+                      checkValidation() === true
+                        ? handleSubmit()
+                        : console.log("Invalid Data");
+                    }}
                   >
                     Sign Up
                   </button>
-
-                  </div>
                 </div>
 
                 <div>
