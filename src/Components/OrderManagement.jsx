@@ -39,9 +39,10 @@ const OrderManagement = () => {
     <>
       <div className="container">
         {/* Header of the Card contains Search box, Export button & Add order button */}
-
+       
         <h1 className="dark-mode"> Orders</h1>
         <div className=" d-flex justify-content-between mb-2">
+        {listToDisplay.length !== 0 ?(<>
           <div className="col-sm-6">
             <input
               type="text"
@@ -50,8 +51,11 @@ const OrderManagement = () => {
               placeholder="Search here ..."
             />
           </div>
+          </> ) : <div></div>}
 
           <div>
+        {listToDisplay.length !== 0  &&
+
             <ReactHtmlToExcel
               id="excelComp"
               className=" btn btn-outline-success"
@@ -60,7 +64,7 @@ const OrderManagement = () => {
               sheet="tablexls"
               buttonText="Export to Excel"
             />
-
+        }
             <button
               type="button"
               className="btn dark-button marleft"
