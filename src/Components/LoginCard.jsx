@@ -68,7 +68,7 @@ const LoginCard = ({ setIsLoggedIn }) => {
                   </p>
 
                   <div className="form-outline form-white mb-2">
-                    <label className="form-label" for="email">
+                    <label className="form-label" htmlFor="email">
                       Email
                     </label>
 
@@ -83,7 +83,7 @@ const LoginCard = ({ setIsLoggedIn }) => {
                   </div>
 
                   <div className="form-outline form-white mb-2">
-                    <label className="form-label text-right" for="password">
+                    <label className="form-label text-right" htmlFor="password">
                       Password
                     </label>
 

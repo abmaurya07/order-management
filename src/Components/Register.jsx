@@ -8,7 +8,7 @@ const RegisterCard = () => {
   const [confirmPass, setConfirmPass] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [userData, setUserData] = useState("");
-
+ console.log("UserData", userData)
   const navigate = useNavigate();
   useEffect(() => {
     if (localStorage.getItem("Users")) {
@@ -26,7 +26,7 @@ const RegisterCard = () => {
     } else if (email === "" || regex.test(email) === false) {
       setErrorMsg("Please Enter Valid Email!");
       return status;
-    } else if (userData.some((e) => e.email == email) == true) {
+    } else if (userData && userData.some((e) => e.email == email) == true) {
       setErrorMsg("Email already exists");
       return status;
     } else if (password === "") {
@@ -85,7 +85,7 @@ const RegisterCard = () => {
                     Please enter your details!
                   </p>
                   <div className="form-outline form-white mb-2">
-                    <label className="form-label" for="fullName">
+                    <label className="form-label" htmlFor="fullName">
                       Full Name
                     </label>
 
@@ -99,7 +99,7 @@ const RegisterCard = () => {
                     />
                   </div>{" "}
                   <div className="form-outline form-white mb-2">
-                    <label className="form-label" for="email">
+                    <label className="form-label" htmlFor="email">
                       Email Address
                     </label>
 
@@ -113,7 +113,7 @@ const RegisterCard = () => {
                     />
                   </div>{" "}
                   <div className="form-outline form-white mb-2">
-                    <label className="form-label" for="password">
+                    <label className="form-label" htmlFor="password">
                       Password
                     </label>
 
@@ -127,7 +127,7 @@ const RegisterCard = () => {
                     />
                   </div>
                   <div className="form-outline form-white mb-2">
-                    <label className="form-label text-right" for="confirmPass">
+                    <label className="form-label text-right" htmlFor="confirmPass">
                       Confirm Password
                     </label>
 

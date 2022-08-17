@@ -63,7 +63,7 @@ const OrderManagement = () => {
 
             <button
               type="button"
-              class="btn dark-button marleft"
+              className="btn dark-button marleft"
               onClick={() => {
                 setIsHidden(false);
               }}
