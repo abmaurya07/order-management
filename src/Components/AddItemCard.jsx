@@ -59,7 +59,7 @@ const AddItemCard = ({ listItems, setListItems, setIsHidden }) => {
   }
 
 
-  //-----If item level validation passes the this function gets invoked and another validation check runs before submitting the Order------//
+  //-----If item level validation passes then this function gets invoked and another validation check runs before submitting the Order------//
   const handleSubmit = (e) => {
     e.preventDefault();
     if (name === "") {
@@ -163,7 +163,7 @@ const AddItemCard = ({ listItems, setListItems, setIsHidden }) => {
        {/* -------------  Button to remove the item from order* --------------------*/}
 
               <div className="col-sm-3 d-flex justify-content=between">
-                {idx !== 0 ? (
+                {increment !== 1 ? (
                   <input
                     type="button"
                     className="btn btn-outline-danger mt-4 mr-2"
